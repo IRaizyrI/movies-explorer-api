@@ -71,7 +71,7 @@ exports.deleteMovie = async (req, res, next) => {
     if (!movie) {
       throw new NotFoundError('Movie not found');
     }
-    if (req.user._id === movie.owner.toString()) {
+    if (userId !== movie.owner.toString()) {
       throw new ForbiddenError('Access denied');
     }
     await Movie.deleteOne({ _id: movieId, owner: userId });
