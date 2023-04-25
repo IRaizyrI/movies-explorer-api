@@ -9,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.get('/me', getCurrentUser);
-router.patch('/me', patchMeValidator, updateUser);
+router.get('/users/me', getCurrentUser);
+router.patch('/users/me', patchMeValidator, updateUser);
 
 module.exports = router;

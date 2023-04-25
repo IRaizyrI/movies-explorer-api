@@ -11,8 +11,8 @@ const {
 
 const router = express.Router();
 
-router.get('/', getMovies);
-router.post('/', createMovieValidator, createMovie);
-router.delete('/:_id', deleteMovieValidator, deleteMovie);
+router.get('/movies', getMovies);
+router.post('/movies', createMovieValidator, createMovie);
+router.delete('/movies/:_id', deleteMovieValidator, deleteMovie);
 
 module.exports = router;
