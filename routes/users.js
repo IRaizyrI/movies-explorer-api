@@ -1,6 +1,5 @@
 const express = require('express');
 const {
-  getMeValidator,
   patchMeValidator,
 } = require('../middlewares/validation');
 const {
@@ -10,7 +9,7 @@ const {
 
 const router = express.Router();
 
-router.get('/me', getMeValidator, getCurrentUser);
+router.get('/me', getCurrentUser);
 router.patch('/me', patchMeValidator, updateUser);
 
 module.exports = router;

@@ -82,6 +82,11 @@ exports.loginUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const { email, name } = req.body;
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser && existingUser._id.toString() !== req.user._id.toString()) {
+      throw new ConflictError('User with this email already exists');
+    }
     const user = await User.findByIdAndUpdate(
       req.user._id,
       { email, name },

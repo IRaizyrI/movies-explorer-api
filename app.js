@@ -6,15 +6,12 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
 const corsOptions = require('./middlewares/cors');
-const logoutRoutes = require('./routes/logout');
-const { loginUser, createUser } = require('./controllers/users');
-const usersRoutes = require('./routes/users');
-const moviesRoutes = require('./routes/movies');
-const auth = require('./middlewares/auth');
-const NotFoundError = require('./errors/not-found-err');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { errorHandler } = require('./middlewares/errorhandlers');
-const { signupValidator, loginValidator } = require('./middlewares/validation');
+const { errorHandler } = require('./middlewares/errorHandlers');
+
+const router = require('./routes/index');
+const { urlMongoDev } = require('./utils/constants');
+const rateLimiter = require('./middlewares/rateLimiter');
 require('dotenv').config();
 
 const { NODE_ENV, DB_LINK } = process.env;
@@ -24,7 +21,7 @@ app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-mongoose.connect(NODE_ENV === 'production' ? DB_LINK : 'mongodb://127.0.0.1:27017/bitfilmsdb', {
+mongoose.connect(NODE_ENV === 'production' ? DB_LINK : urlMongoDev, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -35,15 +32,10 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 app.use(requestLogger);
+app.use(rateLimiter);
 
-app.post('/signup', signupValidator, createUser);
-app.post('/signin', loginValidator, loginUser);
-app.use('/logout', auth, logoutRoutes);
-app.use('/movies', auth, moviesRoutes);
-app.use('/users', auth, usersRoutes);
-app.use('', (req, res, next) => {
-  next(new NotFoundError('Not found'));
-});
+app.use(router);
+
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);

@@ -16,12 +16,6 @@ module.exports.signupValidator = celebrate({
   }),
 });
 
-module.exports.getMeValidator = celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().hex().length(24),
-  }),
-});
-
 module.exports.patchMeValidator = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
@@ -34,7 +28,7 @@ module.exports.createMovieValidator = celebrate({
     country: Joi.string().required(),
     director: Joi.string().required(),
     duration: Joi.number().required(),
-    year: Joi.number().required(),
+    year: Joi.string().required(),
     description: Joi.string().required(),
     image: Joi.string().required().regex(urlRegex),
     trailerLink: Joi.string().required().regex(urlRegex),
