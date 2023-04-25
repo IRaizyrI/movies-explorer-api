@@ -1,6 +1,5 @@
 const { Joi, celebrate } = require('celebrate');
-
-const urlRegex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
+const { urlRegex } = require('../utils/constants');
 
 module.exports.loginValidator = celebrate({
   body: Joi.object().keys({
