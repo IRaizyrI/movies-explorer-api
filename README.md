@@ -5,7 +5,9 @@
 # Репозиторий
 
  [Репозиторий *тык*](https://github.com/IRaizyrI/movies-explorer-api)
+ ``https://github.com/IRaizyrI/movies-explorer-api``
  [Ссылка на запущенный апи *тык*](https://api.logvinovilya-dip.nomoredomains.monster/api)
+ ``https://api.logvinovilya-dip.nomoredomains.monster/api``
  
 ## Директории
 
